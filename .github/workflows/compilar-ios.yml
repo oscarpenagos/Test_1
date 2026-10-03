@@ -1,0 +1,46 @@
+name: Compilar app iOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master, mimoto-ios ]
+
+jobs:
+  compilar:
+    runs-on: macos-15
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Ubicar el proyecto
+        run: |
+          PROYECTO=$(find . -maxdepth 3 -name "MiMoto.xcodeproj" -type d | head -1)
+          if [ -z "$PROYECTO" ]; then echo "No se encontró MiMoto.xcodeproj"; exit 1; fi
+          echo "CARPETA=$(dirname "$PROYECTO")" >> "$GITHUB_ENV"
+          xcodebuild -version
+
+      - name: Compilar la app (sin firmar)
+        run: |
+          cd "$CARPETA"
+          xcodebuild \
+            -project MiMoto.xcodeproj \
+            -scheme MiMoto \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Empaquetar MiMoto.ipa
+        run: |
+          cd "$CARPETA"
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/MiMoto.app Payload/
+          zip -qry "$GITHUB_WORKSPACE/MiMoto.ipa" Payload
+
+      - name: Publicar el archivo .ipa
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiMoto-ipa
+          path: MiMoto.ipa
