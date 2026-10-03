@@ -5,6 +5,9 @@ on:
   push:
     branches: [ main, master, mimoto-ios ]
 
+permissions:
+  contents: write
+
 jobs:
   compilar:
     runs-on: macos-15
@@ -44,3 +47,14 @@ jobs:
         with:
           name: MiMoto-ipa
           path: MiMoto.ipa
+
+      - name: Guardar MiMoto.ipa en la rama mimoto-ipa
+        run: |
+          mkdir -p /tmp/salida && cp "$GITHUB_WORKSPACE/MiMoto.ipa" /tmp/salida/
+          cd /tmp/salida
+          git init -q -b mimoto-ipa
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add MiMoto.ipa
+          git commit -q -m "MiMoto.ipa compilado desde ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" mimoto-ipa
