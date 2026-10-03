@@ -61,6 +61,7 @@ struct Tile: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(titulo).font(.caption).foregroundStyle(Color.secondary)
+                .lineLimit(1).minimumScaleFactor(0.8)
             Text(valor).font(.headline).foregroundStyle(Tema.acento)
                 .lineLimit(1).minimumScaleFactor(0.7)
         }

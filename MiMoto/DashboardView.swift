@@ -59,7 +59,7 @@ struct DashboardView: View {
                 Button {
                     store.abrir(.moto)
                 } label: {
-                    Text("Editar información").font(.footnote.weight(.semibold))
+                    Label("Editar", systemImage: "pencil").font(.footnote.weight(.semibold))
                 }
                 .buttonStyle(.bordered)
                 .tint(Color.white)
