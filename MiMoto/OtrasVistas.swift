@@ -9,21 +9,15 @@ struct MasView: View {
     var body: some View {
         List {
             Section("Documentos") {
-                NavigationLink {
-                    SeccionView(seccion: .soat)
-                } label: {
+                NavigationLink(destination: SeccionView(seccion: .soat)) {
                     Label("SOAT", systemImage: Seccion.soat.icono)
                 }
-                NavigationLink {
-                    SeccionView(seccion: .tecnomecanica)
-                } label: {
+                NavigationLink(destination: SeccionView(seccion: .tecnomecanica)) {
                     Label("Tecnomecánica", systemImage: Seccion.tecnomecanica.icono)
                 }
             }
             Section("Registros") {
-                NavigationLink {
-                    HistorialView()
-                } label: {
+                NavigationLink(destination: HistorialView()) {
                     Label("Historial", systemImage: "clock.arrow.circlepath")
                 }
             }
@@ -33,9 +27,7 @@ struct MasView: View {
                 } label: {
                     Label("Editar información de la moto", systemImage: "pencil")
                 }
-                NavigationLink {
-                    RespaldoView()
-                } label: {
+                NavigationLink(destination: RespaldoView()) {
                     Label("Copia de seguridad", systemImage: "externaldrive.fill")
                 }
             }

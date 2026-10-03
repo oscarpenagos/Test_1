@@ -1,0 +1,30 @@
+{
+  "app": "moto_app",
+  "version": 1,
+  "exportado": "2026-10-03T12:00:00",
+  "datos": {
+    "moto": [{"id": 1, "marca": "Honda", "modelo": "CB 125F", "anio": 2023, "placa": "ABC12D", "km_actual": 18450}],
+    "tanqueos": [
+      {"id": 1, "fecha": "2026-09-05", "km": 17620, "litros": 9.2, "valor": 15500, "estacion": "Estación Centro", "notas": null},
+      {"id": 2, "fecha": "2026-09-14", "km": 17980, "litros": 8.1, "valor": 13900, "estacion": "Estación Norte", "notas": null},
+      {"id": 3, "fecha": "2026-09-24", "km": 18220, "litros": 6.0, "valor": 10400, "estacion": "Estación Centro", "notas": null},
+      {"id": 4, "fecha": "2026-10-02", "km": 18450, "litros": 5.6, "valor": 9800, "estacion": "Estación Sur", "notas": "Tanque lleno"}
+    ],
+    "aceite": [
+      {"id": 1, "fecha": "2026-05-10", "km": 12800, "marca": "Motul", "viscosidad": "10W40", "cantidad": 1.0, "valor": 42000, "lugar": "Taller El Piñón", "intervalo_km": 3000, "notas": null},
+      {"id": 2, "fecha": "2026-08-01", "km": 15800, "marca": "Motul", "viscosidad": "10W40", "cantidad": 1.0, "valor": 45000, "lugar": "Taller El Piñón", "intervalo_km": 3000, "notas": null}
+    ],
+    "soat": [
+      {"id": 1, "fecha_expedicion": "2025-10-20", "fecha_vencimiento": "2026-10-20", "numero": "SO-998877", "aseguradora": "Aseguradora Demo", "notas": null}
+    ],
+    "tecnomecanica": [
+      {"id": 1, "fecha_realizacion": "2026-03-15", "fecha_vencimiento": "2027-03-15", "numero": "CERT-4455", "centro": "CDA Demo", "km": 14200, "notas": null}
+    ],
+    "mantenimientos": [
+      {"id": 1, "nombre": "Revisión de frenos", "fecha": "2026-03-25", "km": 14300, "proxima_fecha": "2026-09-25", "proximo_km": null, "costo": 35000, "notas": null, "completado": 0},
+      {"id": 2, "nombre": "Lubricación de cadena", "fecha": "2026-09-01", "km": 17700, "proxima_fecha": null, "proximo_km": 18700, "costo": 8000, "notas": null, "completado": 0},
+      {"id": 3, "nombre": "Cambio de bujía", "fecha": "2026-06-10", "km": 14000, "proxima_fecha": null, "proximo_km": 22000, "costo": 25000, "notas": null, "completado": 0},
+      {"id": 4, "nombre": "Cambio de pastillas", "fecha": "2026-07-15", "km": 15200, "proxima_fecha": null, "proximo_km": null, "costo": 60000, "notas": null, "completado": 1}
+    ]
+  }
+}

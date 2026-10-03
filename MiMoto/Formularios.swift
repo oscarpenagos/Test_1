@@ -7,7 +7,7 @@ struct FormularioView: View {
     let formulario: Formulario
 
     var body: some View {
-        NavigationStack {
+        Navegacion {
             contenido
         }
     }
@@ -43,7 +43,7 @@ private struct MarcoFormulario: ViewModifier {
         content
             .navigationTitle(titulo)
             .navigationBarTitleDisplayMode(.inline)
-            .scrollDismissesKeyboard(.interactively)
+            .ocultarTecladoAlDesplazar()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar") { store.formulario = nil }

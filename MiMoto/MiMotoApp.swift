@@ -15,19 +15,33 @@ struct MiMotoApp: App {
 
 struct RootView: View {
     @EnvironmentObject var store: Store
+    /// Pestaña inicial (0 = Inicio). Se puede cambiar con el argumento -pestanaInicial.
+    @State private var pestana = UserDefaults.standard.integer(forKey: "pestanaInicial")
 
     var body: some View {
-        TabView {
-            NavigationStack { DashboardView() }
+        TabView(selection: $pestana) {
+            Navegacion { DashboardView() }
                 .tabItem { Label("Inicio", systemImage: "house.fill") }
-            NavigationStack { SeccionView(seccion: .tanqueos) }
+                .tag(0)
+            Navegacion { SeccionView(seccion: .tanqueos) }
                 .tabItem { Label("Tanqueos", systemImage: Seccion.tanqueos.icono) }
-            NavigationStack { SeccionView(seccion: .aceite) }
+                .tag(1)
+            Navegacion { SeccionView(seccion: .aceite) }
                 .tabItem { Label("Aceite", systemImage: Seccion.aceite.icono) }
-            NavigationStack { SeccionView(seccion: .mantenimientos) }
+                .tag(2)
+            Navegacion { SeccionView(seccion: .mantenimientos) }
                 .tabItem { Label("Mantenim.", systemImage: Seccion.mantenimientos.icono) }
-            NavigationStack { MasView() }
+                .tag(3)
+            Navegacion { MasView() }
                 .tabItem { Label("Más", systemImage: "ellipsis.circle.fill") }
+                .tag(4)
+        }
+        .onAppear {
+            // Permite abrir un formulario al iniciar (-abrirFormulario tanqueos); útil para capturas.
+            if let clave = UserDefaults.standard.string(forKey: "abrirFormulario"),
+               let seccion = Seccion(rawValue: clave) {
+                store.abrir(.registro(seccion, nil))
+            }
         }
         .tint(Tema.acento)
         .sheet(item: $store.formulario) { formulario in

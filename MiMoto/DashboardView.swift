@@ -180,9 +180,7 @@ struct DashboardView: View {
     /// Tarjeta que al tocarla abre la sección correspondiente.
     private func enlace<C: View>(_ seccion: Seccion, @ViewBuilder _ contenido: () -> C) -> some View {
         let cuerpo = contenido()
-        return NavigationLink {
-            SeccionView(seccion: seccion)
-        } label: {
+        return NavigationLink(destination: SeccionView(seccion: seccion)) {
             Tarjeta {
                 cuerpo
                 HStack(spacing: 4) {

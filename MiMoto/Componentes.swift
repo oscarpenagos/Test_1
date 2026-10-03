@@ -109,6 +109,38 @@ struct ShareSheet: UIViewControllerRepresentable {
     func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
 }
 
+// MARK: - Compatibilidad con iOS 15 (iPhone 13 de fábrica)
+
+/// Navegación que funciona en iOS 15 y aprovecha NavigationStack desde iOS 16.
+struct Navegacion<Content: View>: View {
+    let content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        if #available(iOS 16.0, *) {
+            NavigationStack { content }
+        } else {
+            NavigationView { content }
+                .navigationViewStyle(.stack)
+        }
+    }
+}
+
+extension View {
+    /// Oculta el teclado al desplazar el formulario (solo iOS 16 o superior).
+    @ViewBuilder
+    func ocultarTecladoAlDesplazar() -> some View {
+        if #available(iOS 16.0, *) {
+            self.scrollDismissesKeyboard(.interactively)
+        } else {
+            self
+        }
+    }
+}
+
 // MARK: - Campos de formulario
 
 struct MensajeError: View {
@@ -138,7 +170,7 @@ struct CampoTexto: View {
                 TextField(placeholder.isEmpty ? etiqueta : placeholder, text: $texto)
                     .keyboardType(teclado)
                     .textInputAutocapitalization(mayusculas ? TextInputAutocapitalization.characters : TextInputAutocapitalization.sentences)
-                    .autocorrectionDisabled(teclado != .default || mayusculas)
+                    .disableAutocorrection(teclado != .default || mayusculas)
                 if !sugerencias.isEmpty {
                     Menu {
                         ForEach(sugerencias, id: \.self) { s in
@@ -167,8 +199,13 @@ struct CampoNotas: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Notas").font(.caption).foregroundStyle(Color.secondary)
-            TextField("Opcional", text: $texto, axis: .vertical)
-                .lineLimit(3...6)
+            if #available(iOS 16.0, *) {
+                TextField("Opcional", text: $texto, axis: .vertical)
+                    .lineLimit(3...6)
+            } else {
+                TextEditor(text: $texto)
+                    .frame(minHeight: 80)
+            }
             MensajeError(texto: error)
         }
         .padding(.vertical, 2)

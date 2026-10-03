@@ -28,9 +28,7 @@ struct SeccionView: View {
                         .foregroundStyle(Color.secondary)
                 }
                 ForEach(filas) { fila in
-                    NavigationLink {
-                        DetalleView(seccion: seccion, id: fila.id)
-                    } label: {
+                    NavigationLink(destination: DetalleView(seccion: seccion, id: fila.id)) {
                         FilaView(fila: fila)
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -200,7 +198,9 @@ struct DetalleView: View {
                 }
                 Section {
                     ForEach(lineas) { l in
-                        LabeledContent(l.etiqueta) {
+                        HStack(alignment: .firstTextBaseline, spacing: 12) {
+                            Text(l.etiqueta).foregroundStyle(Color.secondary)
+                            Spacer(minLength: 8)
                             Text(l.valor)
                                 .multilineTextAlignment(.trailing)
                                 .foregroundStyle(Color.primary)
