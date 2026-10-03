@@ -40,6 +40,9 @@ jobs:
           cd "$CARPETA"
           mkdir -p Payload
           cp -R build/Build/Products/Release-iphoneos/MiMoto.app Payload/
+          # Firma básica (ad-hoc): Sideloadly/AltStore la reemplazan por la de tu Apple ID
+          codesign --force --sign - --timestamp=none Payload/MiMoto.app
+          codesign --verify --verbose=2 Payload/MiMoto.app
           zip -qry "$GITHUB_WORKSPACE/MiMoto.ipa" Payload
 
       - name: Publicar el archivo .ipa
